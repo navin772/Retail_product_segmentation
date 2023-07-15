@@ -6,7 +6,7 @@ IMAGE_DIR = os.path.join('.', 'test_images')
 image_path = os.path.join(IMAGE_DIR, 'train_592.jpg')
 print(image_path)
 
-model_path = os.path.join('.', 'runs_1000', 'detect', 'train', 'weights', 'best.pt')
+model_path = os.path.join('.', 'runs', 'detect', 'train', 'weights', 'best.pt')
 print(model_path)
 
 # Load the model
