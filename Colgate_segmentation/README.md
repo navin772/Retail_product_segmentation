@@ -6,7 +6,7 @@ The ML model is trained on [YOLOv8](https://github.com/ultralytics/ultralytics) 
 The dataset is created using images downloaded from google images using the `image_downloader.py` python script. The script uses the `icrawler` library to download images from google images. Some additional shelf images where found from the [SKU110K Dataset](https://www.kaggle.com/datasets/thedatasith/sku110k-annotations) on kaggle.
 
 ### Annotations and bounding boxes
-The dataset was labelled and annotated using [CVAT](cvat.ai) and the annotations were exported as YOLO format. The annotations are stored in the `Model_training/labels/train` folder. The annotations are in text(.txt) format.
+The dataset was labelled and annotated using [CVAT](https://www.cvat.ai/) and the annotations were exported as YOLO format. The annotations are stored in the `Model_training/labels/train` folder. The annotations are in text(.txt) format.
 
 ### Training
 1. The model was trained using the YOLOv8 nano model as the base model on the custom dataset we created and annotated earlier.
