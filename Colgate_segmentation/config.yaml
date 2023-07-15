@@ -1,0 +1,8 @@
+path: D:\Retail_product_segmentation\Colgate_segmentation\Model_training   # Provide the absolute path - important
+train: images\train # Path relative to above 'path'
+val: images\train
+
+
+#Classes
+names:
+  0: colgate
