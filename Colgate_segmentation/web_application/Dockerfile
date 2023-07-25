@@ -1,28 +1,34 @@
-# Use Ubuntu minimal as the base image
-FROM ubuntu:latest
+# Use Python as the base image
+FROM python:3.11-slim
 
-# Set environment variables to avoid any interactive prompts during installation
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Install necessary dependencies for your application
-RUN apt-get update && apt-get install -y python3 python3-pip libgl1 libsm6 libxext6
-
-# Set the locale to avoid potential encoding issues
-RUN apt-get install -y locales && locale-gen en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8
-
-# Copy your application code
-COPY . /app
-
-# Install streamlit and other requirements
-RUN pip3 install --upgrade pip && pip3 install -r /app/requirements.txt
-
-# Expose the port for Streamlit
-EXPOSE 8501
+# Install Git
+RUN apt-get update && apt-get install -y git
 
 # Set the working directory
 WORKDIR /app
 
-# Run your Streamlit app
+# Clone the repository
+RUN git clone https://github.com/ultralytics/ultralytics
+
+# Change directory to ultralytics
+WORKDIR /app/ultralytics
+
+# Modify requirements.txt file
+RUN sed -i 's/opencv-python>=4.6.0/opencv-python-headless/' requirements.txt
+
+# Install the requirements
+RUN pip install -e .
+
+# Go back to the original working directory
+WORKDIR /app
+
+# Copy the contents of the current directory to the Docker container
+COPY . /app
+
+EXPOSE 8501
+
+RUN pip install -r requirements.txt
+# (Optional) Add any additional commands or configurations here if needed
 ENTRYPOINT ["streamlit", "run"]
+# Define the default command to run when the container starts
 CMD ["main.py"]
