@@ -2,7 +2,7 @@
 FROM python:3.10-slim
 
 # Install Git
-RUN apt-get update && apt-get install -y git && \
+RUN apt-get update && apt-get install --no-install-recommends -y git && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
@@ -29,7 +29,7 @@ RUN echo "opencv-python-headless" >> requirements.txt && \
     echo "py-cpuinfo" >> requirements.txt
 
 # Install the requirements
-RUN pip install -e .
+RUN pip install --no-cache -e .
 
 # Go back to the original working directory
 WORKDIR /app
@@ -42,7 +42,7 @@ COPY . /app
 EXPOSE 8501
 
 # Install the requirements
-RUN pip install -r requirements.txt
+RUN pip install --no-cache -r requirements.txt
 
 ENTRYPOINT ["streamlit", "run"]
 CMD ["main.py"]
