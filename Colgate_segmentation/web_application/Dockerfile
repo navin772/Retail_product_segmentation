@@ -19,6 +19,7 @@ RUN rm requirements.txt
 
 # Create a new requirements.txt file for ultralytics
 RUN echo "opencv-python-headless" >> requirements.txt && \
+    echo "matplotlib>=3.2.2" >> requirements.txt && \
     echo "pyyaml>=5.3.1" >> requirements.txt && \
     echo "requests>=2.23.0" >> requirements.txt && \
     echo "scipy>=1.4.1" >> requirements.txt && \
@@ -33,7 +34,7 @@ RUN pip install -e .
 # Go back to the original working directory
 WORKDIR /app
 
-RUN rm -r ultralytics
+# RUN rm -r ultralytics
 
 # Copy the contents of the current directory to the Docker container
 COPY . /app
