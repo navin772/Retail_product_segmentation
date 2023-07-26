@@ -1,3 +1,6 @@
 streamlit
-Pillow
 numpy
+# https://download.pytorch.org/whl/cpu/torchvision-0.15.2%2Bcpu-cp310-cp310-win_amd64.whl #torchvision for windows system - select this if running on windows
+https://download.pytorch.org/whl/cpu/torchvision-0.15.2%2Bcpu-cp310-cp310-linux_x86_64.whl #torchvision for linux system
+-f https://download.pytorch.org/whl/torch_stable.html
+torch==2.0.1+cpu

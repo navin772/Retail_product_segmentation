@@ -1,8 +1,9 @@
 # Use Python as the base image
-FROM python:3.11-slim
+FROM python:3.10-slim
 
 # Install Git
-RUN apt-get update && apt-get install -y git
+RUN apt-get update && apt-get install -y git && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
 WORKDIR /app
@@ -13,8 +14,20 @@ RUN git clone https://github.com/ultralytics/ultralytics
 # Change directory to ultralytics
 WORKDIR /app/ultralytics
 
-# Modify requirements.txt file
-RUN sed -i 's/opencv-python>=4.6.0/opencv-python-headless/' requirements.txt
+# Delete the requirements.txt file
+RUN rm requirements.txt
+
+# Create a new requirements.txt file for ultralytics
+RUN echo "matplotlib>=3.2.2" >> requirements.txt && \
+    echo "opencv-python-headless" >> requirements.txt && \
+    echo "pillow>=7.1.2" >> requirements.txt && \
+    echo "pyyaml>=5.3.1" >> requirements.txt && \
+    echo "requests>=2.23.0" >> requirements.txt && \
+    echo "scipy>=1.4.1" >> requirements.txt && \
+    echo "tqdm>=4.64.0" >> requirements.txt && \
+    echo "pandas>=1.1.4" >> requirements.txt && \
+    echo "psutil" >> requirements.txt && \
+    echo "py-cpuinfo" >> requirements.txt
 
 # Install the requirements
 RUN pip install -e .
@@ -27,8 +40,8 @@ COPY . /app
 
 EXPOSE 8501
 
+# Install the requirements
 RUN pip install -r requirements.txt
-# (Optional) Add any additional commands or configurations here if needed
+
 ENTRYPOINT ["streamlit", "run"]
-# Define the default command to run when the container starts
 CMD ["main.py"]
