@@ -17,3 +17,4 @@ spec:
     name: https
   selector:
     app: retail-segmentation
+  sessionAffinity: ClientIP # Configure session affinity so that requests from the same client are always routed to the same pod
