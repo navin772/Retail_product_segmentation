@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: retail-segmentation
+  name: retail-segmentation
+  namespace: retail
+spec:
+  replicas: 2 # Creating two PODs for our app
+  selector:
+    matchLabels:
+      app: retail-segmentation
+  template:
+    metadata:
+      labels:
+        app: retail-segmentation 
+    spec:
+      containers:
+      - image: navin772/retail:1.7 # Docker image name
+        name: retail    # POD name 
+        ports:
+        - containerPort: 8501
+          protocol: TCP
