@@ -1,9 +1,9 @@
 # Use Python as the base image
-FROM python:3.10-slim
+FROM registry.suse.com/bci/python:3.10
 
-# Install Git
-RUN apt-get update && apt-get install --no-install-recommends -y git && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+# Install Git -> git-core present by default in suse BCI
+RUN zypper refresh && \
+    zypper clean --all
 
 # Set the working directory
 WORKDIR /app
