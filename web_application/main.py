@@ -6,11 +6,7 @@ import numpy as np
 
 import streamlit as st
 
-model_path = os.path.join('.', 'last.pt')
-print(model_path)
-model = YOLO(model_path)  # load a custom model
-print(model)
-threshold = 0.6
+import fashion
 
 st.set_page_config(
     page_title="Retail product detection", layout="wide"
@@ -18,10 +14,17 @@ st.set_page_config(
 
 st.sidebar.write("Select from below options")
 side = st.sidebar.selectbox(
-    "Selcect one", ["Dashboard"]
+    "Selcect one", ["Dashboard", "Fashion Store"]
 )
 
 if side == 'Dashboard':
+
+    model_path = os.path.join('.', 'last.pt')
+    print(model_path)
+    model = YOLO(model_path)  # load a custom model
+    print(model)
+    threshold = 0.6
+    
     st.markdown('## Retail product detection')
     st.markdown('### Upload an image below ')
     # Upload the image from streamlit interface
@@ -56,3 +59,5 @@ if side == 'Dashboard':
 
         st.image(resized_img, caption='Predictions on the image', use_column_width=True)
 
+if side == 'Fashion Store':
+    fashion.main()
