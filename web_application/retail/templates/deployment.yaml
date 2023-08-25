@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "retail.fullname" . }}-retail-segmentation
+  labels:
+    app: retail-segmentation
+  {{- include "retail.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.retailSegmentation.replicas }}
+  selector:
+    matchLabels:
+      app: retail-segmentation
+    {{- include "retail.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: retail-segmentation
+      {{- include "retail.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - env:
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        image: {{ .Values.retailSegmentation.retail.image.repository }}:{{ .Values.retailSegmentation.retail.image.tag
+          | default .Chart.AppVersion }}
+        name: retail
+        ports:
+        - containerPort: 8501
+          protocol: TCP
+        resources: {}
+      serviceAccountName: {{ include "retail.fullname" . }}

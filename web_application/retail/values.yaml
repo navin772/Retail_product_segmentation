@@ -1,0 +1,17 @@
+kubernetesClusterDomain: cluster.local
+retailSegmentation:
+  ports:
+  - name: http
+    port: 8501
+    protocol: TCP
+    targetPort: 8501
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: 0
+  replicas: 2
+  retail:
+    image:
+      repository: navin772/retail
+      tag: "1.7"
+  type: NodePort

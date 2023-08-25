@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "retail.fullname" . }}-retail-segmentation
+  labels:
+    run: retail-segmentation
+  {{- include "retail.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.retailSegmentation.type }}
+  selector:
+    app: retail-segmentation
+  {{- include "retail.selectorLabels" . | nindent 4 }}
+  ports:
+	{{- .Values.retailSegmentation.ports | toYaml | nindent 2 -}}
