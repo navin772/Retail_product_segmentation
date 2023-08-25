@@ -1,8 +1,5 @@
 import streamlit as st
-from PIL import Image
-import requests
 import random
-from io import BytesIO
 
 from pymilvus import connections, Collection
 
@@ -52,23 +49,14 @@ def show_similar_items(cloth_type, embedding, filepath, similar_items):
         for hit in hits:
             url = hit.entity.get("filepath")
             id_ = hit.entity.get("id")
-            # similar_ids.append(hit.entity.get("id"))
-            # similar_image_urls.append(hit.entity.get("filepath"))
+
             if url not in seen_urls:  # Check if URL is unique
                 similar_ids.append(id_)
                 similar_image_urls.append(url)
                 seen_urls.add(url)
 
-    # similar_ids = similar_ids[3:]
-    # similar_image_urls = similar_image_urls[3:]
-
-    # Check whether 2 image urls are same or not, if same remove one of them from the list of urls and ids
-    
-
     return similar_ids, similar_image_urls
 
-import streamlit as st
-import random
 
 def display_cloth_cards(cloth_type, num_items):
 
@@ -120,10 +108,6 @@ def display_cloth_cards(cloth_type, num_items):
                         for id in ids:
                             column, _ = st.columns([1, 4])
                             column.image(image_urls[ids.index(id)], caption=f'{cloth_type} - {id}', use_column_width=True)
-
-                    # for url in image_urls:
-                    #     column.image(url, use_column_width=True)
-
 
 
 def main():
