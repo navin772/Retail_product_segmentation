@@ -4,7 +4,7 @@ import random
 from pymilvus import connections, Collection
 
 COLLECTION_NAME = 'clothing'  # Collection name
-MILVUS_HOST = "localhost"
+MILVUS_HOST = "milvus.default.svc.cluster.local"
 MILVUS_PORT = "19530"
 
 connections.connect(host=MILVUS_HOST, port=MILVUS_PORT)
@@ -122,6 +122,7 @@ def main():
     elif gender == "Female":
         cloth = st.selectbox("Select Category", ["tops", "women-jeans", "sarees", "kurta"])
 
-    # id, image_urls = get_items_for_categories(cloth, 10)
-    display_cloth_cards(cloth, 20)
+    num_items = st.number_input("Number of items to display", min_value=1, max_value=100, value=20)
+
+    display_cloth_cards(cloth, num_items)
 
