@@ -4,8 +4,13 @@ import random
 from pymilvus import connections, Collection
 
 COLLECTION_NAME = 'clothing'  # Collection name
-MILVUS_HOST = "milvus.default.svc.cluster.local"
+MILVUS_HOST = "milvus.default.svc.cluster.local"  # uses the milvus standalone deployed on the kubernetes cluster
 MILVUS_PORT = "19530"
+
+# Use this for local testing (milvus installed on local machine)
+# COLLECTION_NAME = 'clothing'  # Collection name
+# MILVUS_HOST = "localhost"  # uses the milvus standalone deployed on the kubernetes cluster
+# MILVUS_PORT = "19530"
 
 connections.connect(host=MILVUS_HOST, port=MILVUS_PORT)
 
@@ -88,9 +93,6 @@ def display_cloth_cards(cloth_type, num_items):
                 buy_button = column.button('Buy', key=random.random())
                 similar_button = column.button('Show Similar', key=f'similar_{card_id}')
 
-                # if buy_button:
-                #     st.session_state.buy_clicked[card_id] = True
-
                 if similar_button:
 
                     st.session_state.similar_clicked[card_id] = True
@@ -109,20 +111,49 @@ def display_cloth_cards(cloth_type, num_items):
                             column, _ = st.columns([1, 4])
                             column.image(image_urls[ids.index(id)], caption=f'{cloth_type} - {id}', use_column_width=True)
 
+# Determines the milvus DB mapping for the UI categories
+def return_cloth_category(gender, cloth_in_ui) -> str:
+    cloth_dict_men = {
+        "Tshirts": "tshirt",
+        "Jeans": "jeans",
+        "Casual Shirts": "casual-shirt",
+        "Formal Shirts": "formal-shirt",
+        "Formal Trousers": "formal-trousers",
+    }
+
+    cloth_dict_women = {
+        "Tops": "tops",
+        "Jeans": "women-jeans",
+        "Sarees": "sarees",
+        "Kurtis": "kurta",
+    }
+
+    if gender == "Male":
+        # print(cloth_dict_men[cloth_in_ui])
+        return cloth_dict_men[cloth_in_ui]
+    
+    elif gender == "Female":
+        return cloth_dict_women[cloth_in_ui]
+
 
 def main():
 
+    st.image(image='https://assets.fxcm.com/cdn-cgi/image/quality=100,format=webp,fit=contain,width=828/fxpress/fxcmcom/uk/insight/AACoverImages/iStock-LuxuryFashion1.jpg', width=900)
     st.title("Retail Fashion Store")
     
     gender = st.radio("Select gender", ["Male", "Female"])
 
     if gender == "Male":
-        cloth = st.selectbox("Select Category", ["tshirt", "jeans", "casual-shirt", "formal-shirt", "formal-trousers"])
+        cloth = st.selectbox("Select Category", ["Tshirts", "Jeans", "Casual Shirts", "Formal Shirts", "Formal Trousers"])
 
     elif gender == "Female":
-        cloth = st.selectbox("Select Category", ["tops", "women-jeans", "sarees", "kurta"])
+        cloth = st.selectbox("Select Category", ["Tops", "Jeans", "Sarees", "Kurtis"])
 
     num_items = st.number_input("Number of items to display", min_value=1, max_value=100, value=20)
 
-    display_cloth_cards(cloth, num_items)
+    st.write("Select the items you like and click on 'Show Similar' to see similar items")
+
+    cloth_type = return_cloth_category(gender, cloth)
+
+    display_cloth_cards(cloth_type, num_items)
 

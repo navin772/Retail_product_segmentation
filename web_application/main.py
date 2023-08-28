@@ -14,10 +14,10 @@ st.set_page_config(
 
 st.sidebar.write("Select from below options")
 side = st.sidebar.selectbox(
-    "Selcect one", ["Dashboard", "Fashion Store"]
+    "Selcect one", ["Fashion Store", "Colgate Detection"]
 )
 
-if side == 'Dashboard':
+if side == 'Colgate Detection':
 
     model_path = os.path.join('.', 'last.pt')
     print(model_path)
