@@ -1,2 +1,3 @@
-colgate_data_collection/
-runs_400/
+Model_training/
+**/*.pt
+*.jpg
