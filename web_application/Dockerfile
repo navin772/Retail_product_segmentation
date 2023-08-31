@@ -42,9 +42,9 @@ RUN ls
 COPY /web_application /app
 RUN ls
 
-WORKDIR /app/web_application
+# WORKDIR /app/web_application
 
-RUN ls
+# RUN ls
 
 EXPOSE 8501
 
