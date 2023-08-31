@@ -39,6 +39,8 @@ WORKDIR /app
 # Copy the contents of the current directory to the Docker container
 COPY . /app
 
+WORKDIR /web_application
+
 RUN ls
 
 EXPOSE 8501
