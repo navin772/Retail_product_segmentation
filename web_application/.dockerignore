@@ -1,2 +1,4 @@
 YAML_files/
-retail/
+helm_chart_retail/
+*.mp4
+__pycache__/
