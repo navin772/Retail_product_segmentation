@@ -1,9 +1,9 @@
 # Use Python as the base image
-FROM registry.suse.com/bci/python:3.10
+FROM python:3.10-slim
 
-# Install Git -> git-core present by default in suse BCI
-RUN zypper refresh && \
-    zypper clean --all
+RUN apt-get update --fix-missing && \
+    apt install -y ffmpeg git && \
+    apt autoremove && apt clean
 
 # Set the working directory
 WORKDIR /app
