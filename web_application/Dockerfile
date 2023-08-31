@@ -35,12 +35,10 @@ RUN pip install --no-cache -e .
 
 # Go back to the original working directory
 WORKDIR /app
-RUN ls
 
 # RUN rm -r ultralytics
 # Copy the contents of the current directory to the Docker container
 COPY /web_application /app
-RUN ls
 
 EXPOSE 8501
 
