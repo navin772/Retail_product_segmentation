@@ -42,10 +42,6 @@ RUN ls
 COPY /web_application /app
 RUN ls
 
-# WORKDIR /app/web_application
-
-# RUN ls
-
 EXPOSE 8501
 
 # Install the requirements
