@@ -7,6 +7,7 @@ import numpy as np
 import streamlit as st
 
 import fashion
+import heatmap
 
 st.set_page_config(
     page_title="Retail product detection", layout="wide"
@@ -14,7 +15,7 @@ st.set_page_config(
 
 st.sidebar.write("Select from below options")
 side = st.sidebar.selectbox(
-    "Selcect one", ["Fashion Store", "Colgate Detection"]
+    "Selcect one", ["Fashion Store", "Colgate Detection", "Generate Store Heatmap"]
 )
 
 if side == 'Colgate Detection':
@@ -61,3 +62,6 @@ if side == 'Colgate Detection':
 
 if side == 'Fashion Store':
     fashion.main()
+
+if side == 'Generate Store Heatmap':
+    heatmap.main()

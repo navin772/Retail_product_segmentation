@@ -105,11 +105,14 @@ def display_cloth_cards(cloth_type, num_items):
                     ids, image_urls = show_similar_items(cloth_type, embedding, filepath, 5)
 
                     # Display similar items
-                    with st.expander("Similar Items") as expander:
+                    with st.expander(":green[Show similar items]", expanded=True) as expander:
+                        st.markdown("## Similar Items")
 
-                        for id in ids:
-                            column, _ = st.columns([1, 4])
-                            column.image(image_urls[ids.index(id)], caption=f'{cloth_type} - {id}', use_column_width=True)
+                        cols = st.columns(len(ids))
+                        
+                        for col, id in zip(cols, ids):
+                            col.image(image_urls[ids.index(id)], caption=f'{cloth_type} - {id}', use_column_width=True)
+
 
 # Determines the milvus DB mapping for the UI categories
 def return_cloth_category(gender, cloth_in_ui) -> str:
@@ -129,7 +132,6 @@ def return_cloth_category(gender, cloth_in_ui) -> str:
     }
 
     if gender == "Male":
-        # print(cloth_dict_men[cloth_in_ui])
         return cloth_dict_men[cloth_in_ui]
     
     elif gender == "Female":
