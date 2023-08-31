@@ -29,7 +29,8 @@ jobs:
         with:
           context: .
           file: ./web_application/Dockerfile
+          tags: navin772/retail:latest
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          # tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 

@@ -14,6 +14,8 @@ RUN git clone https://github.com/ultralytics/ultralytics
 # Change directory to ultralytics
 WORKDIR /app/ultralytics
 
+RUN ls
+
 # Delete the requirements.txt file
 RUN rm requirements.txt
 
@@ -33,14 +35,11 @@ RUN pip install --no-cache -e .
 
 # Go back to the original working directory
 WORKDIR /app
+RUN ls
 
 # RUN rm -r ultralytics
-
 # Copy the contents of the current directory to the Docker container
-COPY . /app
-
-WORKDIR /web_application
-
+COPY /web_application /app
 RUN ls
 
 EXPOSE 8501
