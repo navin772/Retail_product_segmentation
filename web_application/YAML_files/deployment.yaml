@@ -16,7 +16,7 @@ spec:
         app: retail-segmentation 
     spec:
       containers:
-      - image: navin772/retail:1.15 # Docker image name
+      - image: navin772/retail:latest # Docker image name
         name: retail    # POD name 
         ports:
         - containerPort: 8501
