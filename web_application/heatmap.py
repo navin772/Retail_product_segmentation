@@ -56,7 +56,7 @@ def generate_heatmap(video_path):
 
 def main():
     
-    st.title("Video Heatmap Application")
+    st.title("Retail Store Heatmap Generation")
 
     uploaded_file = st.file_uploader("Upload a video file", type=["mp4"])
     if uploaded_file is not None:
