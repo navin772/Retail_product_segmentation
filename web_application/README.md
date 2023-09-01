@@ -68,7 +68,7 @@ You can use/deploy the Web application in many ways - locally, as a docker conta
 
 ### Docker container deployment
 
-1. Follow steps 3 and 4 from the previous section - **Locally** to setup the Milvus database.
+1. Follow steps 3 and 4 from the previous section - [**Locally**](https://github.com/navin772/Retail_product_segmentation/tree/docker-build/web_application#locally) to setup the Milvus database.
 2. Pull the docker image from dockerhub.
 
     - `docker pull navin772/retail:deploy_container`
@@ -89,7 +89,7 @@ You can use/deploy the Web application in many ways - locally, as a docker conta
 
     - `kubectl port-forward service/milvus 19530:19530`
 
-3. Follow the step 4 from the section - **Locally** to populate the Milvus database.
+3. Follow the step 4 from the section - [**Locally**](https://github.com/navin772/Retail_product_segmentation/tree/docker-build/web_application#locally) to populate the Milvus database.
 
 4. Change into the `web_application` directory and run the following command to deploy the application on the Kubernetes cluster using kustomize.
 
