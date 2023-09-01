@@ -64,36 +64,39 @@ def main():
         with open(video_path, "wb") as f:
             f.write(uploaded_file.getbuffer())
 
-        st.text("Generating heatmap...")
-        output_frames, frame_rate = generate_heatmap(video_path)
+        with st.status("Generating heatmap...", expanded=True) as status:
 
-        st.text("Creating heatmap video...")
+        # st.text("Generating heatmap...")
+            output_frames, frame_rate = generate_heatmap(video_path)
 
-        st.text("This may take a few minutes...")
+            st.write("Creating heatmap video...")
         
-        # Create a temporary directory to hold video frames
-        temp_dir = "temp_frames"
-        os.makedirs(temp_dir, exist_ok=True)
+            # Create a temporary directory to hold video frames
+            temp_dir = "temp_frames"
+            os.makedirs(temp_dir, exist_ok=True)
 
-        # Save the frames as images in the temporary directory
-        for i, frame in enumerate(output_frames):
-            frame_path = os.path.join(temp_dir, f"frame_{i:04d}.png")
-            cv2.imwrite(frame_path, frame)
+            st.write("This may take a few minutes...")
 
-        # Create the final video using ffmpeg
-        output_path = "output_heatmap_video.mp4"
+            # Save the frames as images in the temporary directory
+            for i, frame in enumerate(output_frames):
+                frame_path = os.path.join(temp_dir, f"frame_{i:04d}.png")
+                cv2.imwrite(frame_path, frame)
 
-        if os.path.exists(output_path):
-            os.remove(output_path)  
+            # Create the final video using ffmpeg
+            output_path = "output_heatmap_video.mp4"
 
-        ffmpeg_cmd = (
-            f"ffmpeg -framerate {frame_rate} -i {temp_dir}/frame_%04d.png -c:v libx264 -pix_fmt yuv420p {output_path}"
-        )
-        os.system(ffmpeg_cmd)
+            if os.path.exists(output_path):
+                os.remove(output_path)  
 
-        # Remove the temporary frames directory
-        os.system(f"rm -rf {temp_dir}")
+            ffmpeg_cmd = (
+                f"ffmpeg -framerate {frame_rate} -i {temp_dir}/frame_%04d.png -c:v libx264 -pix_fmt yuv420p {output_path}"
+            )
+            os.system(ffmpeg_cmd)
 
-        st.text("Heatmap video created!")
-        st.video(output_path)
+            # Remove the temporary frames directory
+            os.system(f"rm -rf {temp_dir}")
+
+            st.write("Finished creating Heatmap")
+            status.update(label="Heatmap video created!")
+            st.video(output_path)
 

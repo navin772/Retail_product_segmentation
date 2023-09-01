@@ -33,32 +33,37 @@ if side == 'Colgate Detection':
 
     if uploaded_file:
 
-        img = Image.open(uploaded_file)
-        img = np.array(img)  # Convert PIL image to NumPy array
-        img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-        # img = cv2.imread(uploaded_file)
-        results = model.predict(img, stream=True)
+        with st.status("Detecting products on the shelf...", expanded=True) as status:
 
-        count = 0
+            img = Image.open(uploaded_file)
+            img = np.array(img)  # Convert PIL image to NumPy array
+            img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+            # img = cv2.imread(uploaded_file)
+            results = model.predict(img, stream=True)
 
-        for result in results:
-            boxes = result.boxes.cpu().numpy() # get boxes on cpu in numpy
-            for box in boxes: # iterate boxes
-                count += 1
-                r = box.xyxy[0].astype(int) # get corner points as int
-                print(r) # print boxes
-                cv2.rectangle(img, r[:2], r[2:], (0,255,0), 2) # draw boxes on img
+            count = 0
+            st.write("Creating bounding boxes...")
+
+            for result in results:
+                boxes = result.boxes.cpu().numpy() # get boxes on cpu in numpy
+                for box in boxes: # iterate boxes
+                    count += 1
+                    r = box.xyxy[0].astype(int) # get corner points as int
+                    print(r) # print boxes
+                    cv2.rectangle(img, r[:2], r[2:], (0,255,0), 2) # draw boxes on img
 
 
-        scale_percent = 30  # adjust this value to change the scaling factor
-        new_width = int(img.shape[1] * scale_percent / 100)
-        new_height = int(img.shape[0] * scale_percent / 100)
-        resized_img = cv2.resize(img, (new_width, new_height))
+            scale_percent = 30  # adjust this value to change the scaling factor
+            new_width = int(img.shape[1] * scale_percent / 100)
+            new_height = int(img.shape[0] * scale_percent / 100)
+            resized_img = cv2.resize(img, (new_width, new_height))
 
-        nums = f'Number of colgates in the image are: {count}'
-        st.markdown(nums)
+            nums = f'Number of colgates in the image are: {count}'
+            st.markdown(nums)
+            
+            status.update(label="Detection Complete!")
 
-        st.image(resized_img, caption='Predictions on the image', use_column_width=True)
+            st.image(resized_img, caption='Predictions on the image', use_column_width=True)
 
 if side == 'Fashion Store':
     fashion.main()
