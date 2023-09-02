@@ -41,7 +41,7 @@ You can use/deploy the Web application in many ways - locally, as a docker conta
 
 1. Clone the repository and change into the `web_application` directory.
 
-    - `git clone https://github.com/navin772/Retail_product_segmentation.git`
+    - `git clone --depth 1 https://github.com/navin772/Retail_product_segmentation.git`
     - `cd web_application`
 
 2. Install the dependencies in your main environment or preferrably in a virtual environment. 
